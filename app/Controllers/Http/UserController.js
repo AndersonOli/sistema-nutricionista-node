@@ -24,12 +24,12 @@ class UserController {
                 return response.status(401).send({ message: validation.messages() })
             }
 
-            const data = request.only(['name', 'email', 'password', 'descripition', 'profile_image', 'formation', 'account_type', 'crn'])
+            const data = request.only(['name', 'email', 'password', 'descripition', 'profile_image', 'formation', 'account_type', 'crn', 'cep', 'adders', 'house_number'])
 
             const user = await User.create(data)
 
-            if(data.account_type == 1){
-                const nutricionist = await Nutricionist.create({
+            if (data.account_type == 1) {
+                await Nutricionist.create({
                     user_id: user.id,
                     name: user.name,
                     formation: user.formation,
@@ -62,10 +62,15 @@ class UserController {
             }
 
             const { email, password } = request.all()
-            const token = await auth.attempt(email, password)
+            let token = await auth.attempt(email, password)
+
+            let account_type = token.token.length > 0 ? await Database.select('account_type').from('users').whereIn("email", [email]) : null;
+
+            token.account_type = account_type
+
             return token
         } catch (e) {
-            return response.status(200).send({ error: `Erro: ${e.message}`})
+            return response.status(200).send({ error: `Erro: ${e.message}` })
         }
     }
 }

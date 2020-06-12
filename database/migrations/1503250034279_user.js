@@ -16,6 +16,9 @@ class UserSchema extends Schema {
       table.integer('account_type', 1).notNullable()
       table.integer('stars', 1)
       table.string('crn', 255)
+      table.string('cep', 8).notNullable()
+      table.string('adders', 255).notNullable()
+      table.string('house_number', 255).notNullable()
       table.timestamps()
     })
   }
