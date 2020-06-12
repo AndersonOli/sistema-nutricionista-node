@@ -39,7 +39,7 @@ class UserController {
 
             return user
         } catch (e) {
-            return response.status(200).send({ error: `Erro: ${e.message}` })
+            return response.status(500).send({ error: `Erro: ${e.message}` })
         }
     }
 
@@ -65,7 +65,7 @@ class UserController {
             const token = await auth.attempt(email, password)
             return token
         } catch (e) {
-            return response.status(200).send({ error: `Erro: ${e.message}`})
+            return response.status(500).send({ error: `Erro: ${e.message}`})
         }
     }
 }
