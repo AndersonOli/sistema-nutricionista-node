@@ -21,7 +21,7 @@ class UserController {
             const validation = await validateAll(request.all(), rules, errorMenssages)
 
             if (validation.fails()) {
-                return response.status(401).send({ message: validation.messages() })
+                return response.status(200).send({ message: validation.messages() })
             }
 
             const data = request.only(['name', 'email', 'password', 'descripition', 'profile_image', 'formation', 'account_type', 'crn', 'cep', 'adders', 'house_number'])
