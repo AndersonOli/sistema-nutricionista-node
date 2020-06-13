@@ -66,7 +66,7 @@ class UserController {
 
             let dataSearched = token.token.length > 0 ? await Database.select('account_type').from('users').whereIn("email", [email]) : null;
 
-            token.account_type = dataSearched.account_type
+            token.account_type = dataSearched[0].account_type
 
             return token
         } catch (e) {
