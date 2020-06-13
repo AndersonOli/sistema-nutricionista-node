@@ -33,7 +33,8 @@ class UserController {
                     user_id: user.id,
                     name: user.name,
                     formation: user.formation,
-                    crn: user.crn
+                    crn: user.crn,
+                    profile_image: user.profile_image
                 })
             }
 
