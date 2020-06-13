@@ -65,9 +65,10 @@ class UserController {
             const { email, password } = request.all()
             let token = await auth.attempt(email, password)
 
-            let dataSearched = token.token.length > 0 ? await Database.select('account_type').from('users').whereIn("email", [email]) : null;
+            let dataSearched = token.token.length > 0 ? await Database.select('id').select('account_type').from('users').whereIn("email", [email]) : null;
 
             token.account_type = dataSearched[0].account_type
+            token.user_id = dataSearched[0].id
 
             return token
         } catch (e) {
