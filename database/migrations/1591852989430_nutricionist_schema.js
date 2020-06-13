@@ -19,6 +19,7 @@ class NutricionistSchema extends Schema {
       table.string('description')
       table.string('formation').notNullable()
       table.string('crn').notNullable()
+      table.string('profile_image').notNullable()
       table.timestamps()
     })
   }
