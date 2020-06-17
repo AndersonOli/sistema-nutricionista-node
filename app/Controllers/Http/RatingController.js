@@ -24,18 +24,9 @@ class RatingController {
 
     const data = request.only(['nutricionist_id'])
 
-    let rating = await Database.select('rating').from('ratings').where('nutricionist_id', data.nutricionist_id)
+    let rating = await Database.select('*').from('ratings').where('nutricionist_id', data.nutricionist_id)
 
-    let num_rows = rating.length
-    let rating_values = 0
-
-    rating.forEach(element => {
-      rating_values += element.rating 
-    });
-
-    let actual_rating = rating_values / num_rows
-
-    return actual_rating
+    return rating
   }
 
   /**
