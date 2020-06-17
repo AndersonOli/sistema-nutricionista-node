@@ -17,6 +17,7 @@ class RatingSchema extends Schema {
       table.string('name', 255).notNullable()
       table.string('comment', 255).notNullable()
       table.double('rating', 255).notNullable()
+      table.string('profile_image', 500).notNullable()
       table.integer('nutricionist_id', 255).notNullable()
       table.timestamps()
     })

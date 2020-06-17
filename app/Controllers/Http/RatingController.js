@@ -4,7 +4,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Rating = use('App/Models/Rating') 
+const Rating = use('App/Models/Rating')
 const Database = use('Database')
 /**
  * Resourceful controller for interacting with ratings
@@ -19,7 +19,7 @@ class RatingController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, auth }) {
+  async index({ request, response, auth }) {
     const id = auth.user.id
 
     const data = request.only(['nutricionist_id'])
@@ -38,7 +38,7 @@ class RatingController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create({ request, response, view }) {
   }
 
   /**
@@ -49,13 +49,14 @@ class RatingController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, auth }) {
+  async store({ request, response, auth }) {
     const name = auth.user.name
     const id = auth.user.id
+    const profile_image = auth.user.profile_image
     const data = request.only(['comment', 'rating', 'nutricionist_id'])
 
     //add new rating
-    const rating = await Rating.create({...data, user_id: id, name: name})
+    const rating = await Rating.create({ ...data, user_id: id, name: name, profile_image: profile_image})
 
     //get actual rating
     let actual_rating = await Database.select('rating').from('ratings').where('nutricionist_id', data.nutricionist_id)
@@ -64,13 +65,13 @@ class RatingController {
     let rating_values = 0
 
     actual_rating.forEach(element => {
-      rating_values += element.rating 
+      rating_values += element.rating
     });
 
     actual_rating = rating_values / num_rows
 
     //update stars
-    await Database.update({ stars: actual_rating}).from('nutricionists').where('user_id', data.nutricionist_id)
+    await Database.update({ stars: actual_rating }).from('nutricionists').where('user_id', data.nutricionist_id)
 
     return rating
   }
@@ -84,7 +85,7 @@ class RatingController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show({ params, request, response, view }) {
   }
 
   /**
@@ -96,7 +97,7 @@ class RatingController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
+  async edit({ params, request, response, view }) {
   }
 
   /**
@@ -107,7 +108,7 @@ class RatingController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
   }
 
   /**
@@ -118,7 +119,7 @@ class RatingController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params, request, response }) {
   }
 }
 
