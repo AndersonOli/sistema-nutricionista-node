@@ -55,8 +55,15 @@ class RatingController {
     const profile_image = auth.user.profile_image
     const data = request.only(['comment', 'rating', 'nutricionist_id'])
 
-    //add new rating
-    const rating = await Rating.create({ ...data, user_id: id, name: name, profile_image: profile_image})
+    let rating
+    let exist = await Database.select('id').from('ratings').where('user_id', id).where('nutricionist_id', data.nutricionist_id)
+
+    if (exist.length > 0) {
+      rating = await Database.update({ comment: data.comment, rating: data.rating }).from('ratings').where('id', exist[0].id).where('nutricionist_id', data.nutricionist_id)
+    } else {
+      //add new rating
+      rating = await Rating.create({ ...data, user_id: id, name: name, profile_image: profile_image })
+    }
 
     //get actual rating
     let actual_rating = await Database.select('rating').from('ratings').where('nutricionist_id', data.nutricionist_id)
