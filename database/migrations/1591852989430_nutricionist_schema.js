@@ -14,7 +14,7 @@ class NutricionistSchema extends Schema {
       .inTable('users')
       .onUpdate('CASCADE')
       .onDelete('CASCADE')
-      table.integer('stars').defaultTo('0')
+      table.double('stars').defaultTo('0')
       table.string('name').notNullable()
       table.string('description')
       table.string('formation').notNullable()

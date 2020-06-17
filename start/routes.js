@@ -22,4 +22,6 @@ Route.get('/', () => {
 
 Route.post('/register', 'UserController.register')
 Route.post('/login', 'UserController.login')
+Route.resource('rating', 'RatingController').apiOnly().middleware('auth')
+Route.resource('appointment', 'AppointmentController').apiOnly().middleware('auth')
 Route.resource('nutricionist', 'NutricionistController').apiOnly().middleware('auth')

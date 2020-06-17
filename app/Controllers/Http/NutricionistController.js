@@ -26,7 +26,7 @@ class NutricionistController {
   }
 
   async store ({ request, response, auth }) {
-    const {id} = auth.user
+    const {id} = auth.user.id
 
     const data = request.only(['name', 'descripition', 'formation', 'crn', 'stars'])
 
