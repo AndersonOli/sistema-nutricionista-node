@@ -57,9 +57,10 @@ class AppointmentController {
    */
   async store ({ request, response, auth }) {
     const id = auth.user.id
-    const data = request.only(['weight', 'hieght', 'reason', 'nutricionist_id'])
+    const name = auth.user.name
+    const data = request.only(['weight', 'height', 'reason', 'nutricionist_id'])
 
-    const appointment = await Appointment.create({...data, user_id: id})
+    const appointment = await Appointment.create({...data, user_id: id, patient_name: name})
 
     return appointment
   }
