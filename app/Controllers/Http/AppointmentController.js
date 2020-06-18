@@ -98,7 +98,12 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ request, paramns }) {
+    const data = request.only(['id']);
+
+    let updateStatus = await Database.update({ status: '1' }).from('appointments').where('id', data.id)
+
+    return updateStatus
   }
 
   /**
