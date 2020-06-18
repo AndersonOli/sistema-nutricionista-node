@@ -20,13 +20,13 @@ class AppointmentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, auth }) {
+  async index({ request, response, auth }) {
     const id = auth.user.id
     const account_type = auth.user.account_type
 
     let result
 
-    if(account_type == 1){
+    if (account_type == 1) {
       result = await Database.select('*').from('appointments').where('nutricionist_id', id)
     } else {
       result = await Database.select('*').from('appointments').where('user_id', id)
@@ -44,7 +44,7 @@ class AppointmentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create({ request, response, view }) {
   }
 
   /**
@@ -55,12 +55,13 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, auth }) {
+  async store({ request, response, auth }) {
     const id = auth.user.id
-    const name = auth.user.name
     const data = request.only(['weight', 'height', 'reason', 'nutricionist_id'])
 
-    const appointment = await Appointment.create({...data, user_id: id, patient_name: name})
+    let dataNutri = await Database.select('name').select('profile_image').from('nutricionists').where('user_id', data.nutricionist_id).first()
+
+    const appointment = await Appointment.create({ ...data, user_id: id, nutricionist_name: dataNutri.name, profile_image: dataNutri.profile_image })
 
     return appointment
   }
@@ -74,7 +75,7 @@ class AppointmentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show({ params, request, response, view }) {
   }
 
   /**
@@ -86,7 +87,7 @@ class AppointmentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
+  async edit({ params, request, response, view }) {
   }
 
   /**
@@ -97,7 +98,7 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
   }
 
   /**
@@ -108,7 +109,7 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params, request, response }) {
   }
 }
 
