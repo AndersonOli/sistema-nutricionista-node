@@ -19,6 +19,9 @@ class AppointmentsSchema extends Schema {
       table.string('reason').notNullable()
       table.integer('status').defaultTo('0')
       table.integer('nutricionist_id').notNullable()
+      table.string('report', 1000)
+      table.string('comments', 1000)
+      table.string('extra_content', 255)
       table.timestamps()
     })
   }

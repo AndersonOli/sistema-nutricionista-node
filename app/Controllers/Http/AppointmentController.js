@@ -24,11 +24,15 @@ class AppointmentController {
     const id = auth.user.id
     const account_type = auth.user.account_type
 
+    let result
+
     if(account_type == 1){
-      
+      result = await Database.select('*').from('appointments').where('nutricionist_id', id)
+    } else {
+      result = await Database.select('*').from('appointments').where('user_id', id)
     }
 
-    return auth.user
+    return result
   }
 
   /**
